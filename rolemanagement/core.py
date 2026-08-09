@@ -102,7 +102,7 @@ class RoleManagement(
     # are not handled in the core bot, which would be a massive permission issue.
 
     __author__ = "mikeshardmind(Sinbad), DiscordLiz"
-    __version__ = "2021.03"
+    __version__ = "2026.08"
 
     async def red_delete_data_for_user(
         self,
