@@ -102,7 +102,7 @@ class RoleManagement(
     # are not handled in the core bot, which would be a massive permission issue.
 
     __author__ = "mikeshardmind(Sinbad), DiscordLiz"
-    __version__ = "2021.03"
+    __version__ = "2026.08"
 
     async def red_delete_data_for_user(
         self,
@@ -792,12 +792,8 @@ class RoleManagement(
         else:
             output += "\nThis role does not have an associated cost."
 
-        page_gen = pagify(output)
-        try:
-            for page in page_gen:
-                await ctx.send(page)
-        finally:
-            page_gen.close()  # type: ignore
+        for page in pagify(output):
+            await ctx.send(page)
 
     @rgroup.command(name="cost")
     async def make_purchasable(

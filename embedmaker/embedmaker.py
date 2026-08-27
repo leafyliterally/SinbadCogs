@@ -36,7 +36,7 @@ class EmbedMaker(commands.Cog):
     Storable, recallable, embed maker
     """
 
-    __version__ = "2021.03"
+    __version__ = "2026.08"
 
     async def red_delete_data_for_user(
         self,
@@ -307,7 +307,8 @@ class EmbedMaker(commands.Cog):
             return await ctx.send("I could not parse that timestamp")
 
         author = ctx.author
-        avatar = ctx.author.avatar_url
+        # DEP-WARN: User/Member.avatar_url was removed in discord.py 2.0.
+        avatar = ctx.author.display_avatar.url
         embed = discord.Embed(description=event, timestamp=timestamp)
         if ctx.guild:
             embed.color = ctx.guild.me.color

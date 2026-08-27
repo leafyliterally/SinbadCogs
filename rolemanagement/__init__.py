@@ -23,5 +23,6 @@ __red_end_user_data_statement__ = (
 
 async def setup(bot):
     cog = RoleManagement(bot)
-    bot.add_cog(cog)
+    # DEP-WARN: Bot.add_cog became a coroutine in discord.py 2.0 / Red 3.5.
+    await bot.add_cog(cog)
     cog.init()

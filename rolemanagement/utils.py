@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import re
 from typing import List
 
@@ -195,6 +196,16 @@ class UtilMixin(MixinMeta):
         return conflicts
 
     async def maybe_update_guilds(self, *guilds: discord.Guild):
+        """
+        DEP-WARN
+        ``Bot.request_offline_members`` was removed without replacement.
+        The closest equivalent is per-guild ``Guild.chunk()``, which
+        requires the (privileged) members intent to be enabled.
+        """
         _guilds = [g for g in guilds if not g.unavailable and g.large and not g.chunked]
-        if _guilds:
-            await self.bot.request_offline_members(*_guilds)
+        if not _guilds:
+            return
+        if not self.bot.intents.members:
+            # Can't chunk without the members intent. Nothing we can do here.
+            return
+        await asyncio.gather(*(g.chunk() for g in _guilds), return_exceptions=True)
