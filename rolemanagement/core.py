@@ -792,12 +792,8 @@ class RoleManagement(
         else:
             output += "\nThis role does not have an associated cost."
 
-        page_gen = pagify(output)
-        try:
-            for page in page_gen:
-                await ctx.send(page)
-        finally:
-            page_gen.close()  # type: ignore
+        for page in pagify(output):
+            await ctx.send(page)
 
     @rgroup.command(name="cost")
     async def make_purchasable(
